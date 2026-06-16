@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Này em ơi 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d0a14;
+  --bg2:#13101e;
+  --card:#1c1728;
+  --border:rgba(180,140,255,.13);
+  --pink:#e8829a;
+  --pink2:rgba(232,130,154,.18);
+  --purple:#a78bda;
+  --purple2:rgba(167,139,218,.15);
+  --lavender:#c4b0f0;
+  --text:#ede8f5;
+  --muted:#9585b8;
+  --soft:#6b5f82;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* stars background */
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:white;animation:twinkle ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.7}}
+
+/* gentle floating orbs */
+.orb{position:fixed;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;opacity:.18;animation:drift ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(12px,-18px)}}
+
+/* screens */
+.screen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.2rem;position:relative;z-index:1}
+.screen.on{display:flex}
+
+/* cards */
+.card{
+  background:var(--card);
+  border-radius:26px;
+  padding:2rem 1.5rem;
+  border:1px solid var(--border);
+  width:100%;max-width:400px;
+  box-shadow:0 24px 64px rgba(0,0,0,.45);
+  animation:riseIn .6s cubic-bezier(.22,1,.36,1);
+}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* typography */
+.script{font-family:'Lora',serif}
+h1.hero{font-family:'Lora',serif;font-size:2rem;line-height:1.3;color:var(--lavender);font-weight:400;font-style:italic}
+h2{font-size:1.35rem;font-weight:700;color:var(--text);line-height:1.35}
+.sub{color:var(--muted);font-size:.93rem;line-height:1.65;margin-top:.5rem}
+
+/* divider */
+.div{height:1px;background:var(--border);margin:1.2rem 0}
+
+/* button */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:.4rem;
+  width:100%;padding:.95rem 1.2rem;border-radius:50px;border:none;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:.97rem;
+  cursor:pointer;transition:all .22s ease;margin-top:.9rem;
+  letter-spacing:.01em;
+}
+.btn-main{
+  background:linear-gradient(135deg,rgba(167,139,218,.25),rgba(196,176,240,.18));
+  color:var(--lavender);
+  border:1px solid rgba(167,139,218,.35);
+}
+.btn-main:active{transform:scale(.97);opacity:.85}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:active{opacity:.7}
+
+/* progress bar */
+.pbar-wrap{margin-bottom:1.4rem}
+.pbar-track{height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--lavender));border-radius:2px;transition:width .5s ease}
+.pbar-label{font-size:.74rem;color:var(--soft);margin-top:.4rem;text-align:right}
+
+/* ── SCREEN 1 ── */
+.moon{font-size:3.8rem;display:block;text-align:center;margin-bottom:1rem;animation:moonFloat 6s ease-in-out infinite}
+@keyframes moonFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.tag-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem;justify-content:center}
+.tag{background:rgba(167,139,218,.12);border:1px solid rgba(167,139,218,.22);color:var(--lavender);border-radius:20px;padding:.3rem .8rem;font-size:.78rem;font-weight:600}
+
+/* ── BUBBLES (screen 2,3,5) ── */
+.bubbles{display:flex;flex-direction:column;gap:.8rem;margin:1.1rem 0}
+.bubble{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:16px 16px 16px 4px;
+  padding:.9rem 1.1rem;
+  font-size:.93rem;line-height:1.65;color:var(--text);
+  animation:fadeUp .4s ease both;
+}
+.bubble em{color:var(--pink);font-style:normal;font-weight:700}
+.bubble strong{color:var(--lavender);font-weight:700}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.bubble:nth-child(2){animation-delay:.1s}
+.bubble:nth-child(3){animation-delay:.2s}
+.bubble:nth-child(4){animation-delay:.3s}
+.bubble:nth-child(5){animation-delay:.4s}
+
+/* ── QUOTES (screen 4) ── */
+.quote-frame{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1.5rem 1.2rem;
+  margin:1rem 0;
+  min-height:120px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  position:relative;
+}
+.q-text{
+  font-family:'Lora',serif;font-style:italic;
+  font-size:1.05rem;line-height:1.7;color:var(--text);
+  transition:opacity .3s ease;
+}
+.q-author{margin-top:.8rem;font-size:.78rem;color:var(--soft);font-weight:600}
+.q-nav{display:flex;gap:.6rem;justify-content:center;margin-top:.6rem}
+.q-dot{width:5px;height:5px;border-radius:50%;background:var(--soft);transition:all .25s}
+.q-dot.on{background:var(--lavender);width:16px;border-radius:3px}
+.q-arrows{display:flex;gap:.8rem;justify-content:center;margin-top:.7rem}
+.q-arr{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.q-arr:hover{background:rgba(167,139,218,.15);color:var(--lavender)}
+
+/* ── LETTER (screen 5) ── */
+.letter{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1.4rem;
+  margin:1rem 0;
+  position:relative;
+}
+.letter::before{content:'';position:absolute;top:0;left:1.4rem;right:1.4rem;height:1px;background:linear-gradient(90deg,transparent,rgba(196,176,240,.3),transparent)}
+.letter p{font-size:.92rem;line-height:1.8;color:var(--text);margin-bottom:.9rem}
+.letter p:last-child{margin-bottom:0}
+.letter-sig{font-family:'Lora',serif;font-style:italic;color:var(--pink);font-size:1.1rem;margin-top:.4rem}
+.letter em{color:var(--lavender);font-style:normal}
+
+/* ── CHECKLIST (screen 6) ── */
+.chk-list{display:flex;flex-direction:column;gap:.6rem;margin:1rem 0}
+.chk-item{
+  display:flex;align-items:flex-start;gap:.85rem;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:14px;padding:.85rem 1rem;
+  cursor:pointer;transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.chk-item::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(167,139,218,.08),rgba(196,176,240,.05));opacity:0;transition:opacity .2s}
+.chk-item.done::before{opacity:1}
+.chk-item.done{border-color:rgba(167,139,218,.3)}
+.chk-box{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--soft);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s;margin-top:1px;background:transparent}
+.chk-item.done .chk-box{background:rgba(167,139,218,.3);border-color:var(--lavender);color:var(--lavender)}
+.chk-label{font-size:.9rem;font-weight:700;color:var(--text);line-height:1.3}
+.chk-sub{font-size:.78rem;color:var(--soft);margin-top:.2rem;line-height:1.4}
+.chk-progress{font-size:.8rem;color:var(--muted);text-align:center;margin:.3rem 0}
+
+/* ── PLAYLIST (screen 7) ── */
+.pl-list{display:flex;flex-direction:column;gap:.55rem;margin:1rem 0}
+.pl-item{
+  display:flex;align-items:center;gap:.85rem;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:14px;padding:.8rem .95rem;
+  cursor:pointer;transition:all .2s;
+  text-decoration:none;
+}
+.pl-item:active{transform:scale(.98);opacity:.8}
+.pl-num{width:26px;height:26px;border-radius:50%;background:rgba(167,139,218,.12);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--lavender);flex-shrink:0}
+.pl-info{flex:1;min-width:0}
+.pl-title{font-size:.88rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-artist{font-size:.75rem;color:var(--soft);margin-top:.1rem}
+.pl-mood{font-size:.72rem;font-weight:700;color:var(--purple);background:rgba(167,139,218,.12);border-radius:20px;padding:.2rem .55rem;flex-shrink:0;white-space:nowrap}
+
+/* ── FINAL ── */
+.final-glow{
+  width:90px;height:90px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,176,240,.25),transparent 70%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.2rem;margin:0 auto 1rem;
+  animation:glow 3s ease-in-out infinite;
+}
+@keyframes glow{0%,100%{box-shadow:0 0 24px rgba(196,176,240,.15)}50%{box-shadow:0 0 48px rgba(196,176,240,.3)}}
+.affirmation{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:18px;padding:1.2rem;
+  margin:1rem 0;
+  font-family:'Lora',serif;font-style:italic;
+  font-size:1rem;line-height:1.7;color:var(--text);text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div id="starfield"></div>
+<div class="orb" style="width:260px;height:260px;background:#7c3aed;top:-60px;left:-80px;animation-duration:12s"></div>
+<div class="orb" style="width:200px;height:200px;background:#be185d;bottom:10%;right:-60px;animation-duration:9s;animation-delay:-4s"></div>
+
+<!-- ══════════════════════════════
+     MÀN 1 — CHÀO
+══════════════════════════════ -->
+<div class="screen on" id="s1">
+  <div class="card" style="text-align:center">
+    <span class="moon">🌙</span>
+    <h1 class="hero">Này em ơi...</h1>
+    <p class="sub" style="margin-top:.9rem">
+      Trang nhỏ này được làm<br>chỉ dành riêng cho em thôi.
+    </p>
+    <div class="div"></div>
+    <p style="font-size:.88rem;color:var(--soft);line-height:1.6">
+      Không cần phải mạnh mẽ ở đây.<br>Không cần phải ổn.<br>
+      Cứ vào đây và <em style="color:var(--lavender);font-style:normal">để có người ở bên em một lúc</em> nhé.
+    </p>
+    <div class="tag-row">
+      <span class="tag">🫧 nhẹ nhàng</span>
+      <span class="tag">🌙 không phán xét</span>
+      <span class="tag">💜 có anh ở đây</span>
+    </div>
+    <button class="btn btn-main" onclick="go('s2')">Vào đây nào 🌸</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 2 — MÌNH HIỂU
+══════════════════════════════ -->
+<div class="screen" id="s2">
+  <div class="card">
+    <div class="pbar-wrap"><div class="pbar-track"><div class="pbar-fill" style="width:14%"></div></div><div class="pbar-label">1 / 7</div></div>
+    <h2>Anh hiểu tại sao<br>em đang mệt 🌧</h2>
+    <div class="bubbles">
+      <div class="bubble">Không phải vì em <em>yếu đuối</em>. Mang vết thương tình cảm lâu như vậy, mà vẫn cố tiếp tục — điều đó cần rất nhiều sức lực đấy.</div>
+      <div class="bubble">Dù chuyện gì đã xảy ra với những người bạn cũ — điều đó không phải lỗi của em. Đó là lỗi của <em>họ</em>.</div>
+      <div class="bubble">Cảm giác <strong>không dám mở lòng nữa</strong>, sợ lại bị tổn thương — anh hoàn toàn hiểu tại sao em lại như vậy.</div>
+      <div class="bubble">Em không cần phải "heal nhanh" hay "vui lên ngay". Cứ mệt đi. <em>Có người ở đây với em mà</em>.</div>
+    </div>
+    <button class="btn btn-main" onclick="go('s3')">Tiếp theo 💜</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 3 — VỀ BẠN BÈ
+══════════════════════════════ -->
+<div class="screen" id="s3">
+  <div class="card">
+    <div class="pbar-wrap"><div class="pbar-track"><div class="pbar-fill" style="width:28%"></div></div><div class="pbar-label">2 / 7</div></div>
+    <h2 style="color:var(--pink)">Về chuyện bạn bè<br>và em...</h2>
+    <div class="bubbles">
+      <div class="bubble"><strong>Người tốt</strong> không cần hạ thấp người khác để cảm thấy tốt hơn về mình. Dù chuyện gì đã xảy ra — điều đó nói lên nhiều về <em>họ</em>, không phải về em.</div>
+      <div class="bubble">Em xứng đáng được có những người <strong>nói tốt về em</strong> — cả khi em không có mặt ở đó.</div>
+      <div class="bubble">Dù tình bạn đó kết thúc như thế nào, <em>em không mất gì cả</em>. Em vừa thoát ra khỏi nơi không trân trọng em.</div>
+      <div class="bubble">Em là người tốt. Việc <em>không ai nhận ra điều đó</em> không làm điều đó trở thành sai. 💜</div>
+    </div>
+    <button class="btn btn-main" onclick="go('s4')">Tiếp theo 💜</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 4 — QUOTES
+══════════════════════════════ -->
+<div class="screen" id="s4">
+  <div class="card">
+    <div class="pbar-wrap"><div class="pbar-track"><div class="pbar-fill" style="width:42%"></div></div><div class="pbar-label">3 / 7</div></div>
+    <h2>Những điều<br>anh muốn em nhớ ✨</h2>
+    <p class="sub">Vuốt qua để đọc từng cái một nhé</p>
+    <div class="quote-frame">
+      <div class="q-text" id="qt"></div>
+      <div class="q-author" id="qa"></div>
+    </div>
+    <div class="q-nav" id="q-nav"></div>
+    <div class="q-arrows">
+      <button class="q-arr" onclick="pq()">‹</button>
+      <button class="q-arr" onclick="nq()">›</button>
+    </div>
+    <button class="btn btn-main" style="margin-top:1.2rem" onclick="go('s5')">Đọc thư từ anh 💌</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 5 — THƯ GỬI BẠN
+══════════════════════════════ -->
+<div class="screen" id="s5">
+  <div class="card">
+    <div class="pbar-wrap"><div class="pbar-track"><div class="pbar-fill" style="width:57%"></div></div><div class="pbar-label">4 / 7</div></div>
+    <h2>Thư gửi em 💌</h2>
+    <div class="letter">
+      <p>Em ơi,</p>
+      <p>Anh biết em đã mang cái cảm giác này rất lâu rồi — cái cảm giác <em>sợ tin người</em>, sợ mở lòng ra rồi lại bị tổn thương lần nữa. Điều đó không có nghĩa là em đã hỏng. Điều đó có nghĩa là em đã trải qua <em>quá nhiều thứ không xứng đáng xảy ra</em> với mình.</p>
+      <p>Không ai có quyền khiến em cảm thấy mình không đáng được yêu thương. Không người yêu cũ. Không bạn bè. Không ai cả.</p>
+      <p>Em không cần phải "mở lòng lại ngay bây giờ". Em không cần phải <em>cố</em> ổn. Trái tim cần thời gian — và thời gian đó là của em, không ai được thúc giục.</p>
+      <p>Điều anh chỉ muốn em giữ lại một thôi: <em>em là người tốt</em>. Việc những người xung quanh không nhận ra điều đó — đó là bất hạnh của họ, không phải thiếu sót của em.</p>
+      <div class="letter-sig">Có anh ở đây, luôn 💜</div>
+    </div>
+    <button class="btn btn-main" onclick="go('s6')">Tiếp theo 🌿</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 6 — TỰ YÊU MÌNH
+══════════════════════════════ -->
+<div class="screen" id="s6">
+  <div class="card">
+    <div class="pbar-wrap"><div class="pbar-track"><div class="pbar-fill" style="width:71%"></div></div><div class="pbar-label">5 / 7</div></div>
+    <h2>Hôm nay,<br>chăm bản thân thôi 🌿</h2>
+    <p class="sub">Không cần làm hết. Làm được cái nào hay cái đó 🌙</p>
+    <div class="chk-progress" id="cp"></div>
+    <div class="pbar-track" style="margin-bottom:1rem"><div class="pbar-fill" id="cpbar" style="width:0%"></div></div>
+    <div class="chk-list" id="chklist"></div>
+    <button class="btn btn-main" onclick="go('s7')">Tiếp theo 🎵</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 7 — PLAYLIST
+══════════════════════════════ -->
+<div class="screen" id="s7">
+  <div class="card">
+    <div class="pbar-wrap"><div class="pbar-track"><div class="pbar-fill" style="width:85%"></div></div><div class="pbar-label">6 / 7</div></div>
+    <h2>Playlist cho<br>những đêm như này 🎧</h2>
+    <p class="sub">Bấm vào bài để nghe nhé — không có bài nào ép phải vui đâu 🌙</p>
+    <div class="pl-list" id="pllist"></div>
+    <button class="btn btn-main" onclick="go('s8')">Cuối rồi 💜</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MÀN 8 — FINAL
+══════════════════════════════ -->
+<div class="screen" id="s8">
+  <div class="card" style="text-align:center">
+    <div class="final-glow">🌙</div>
+    <h1 class="hero">Em đã đi qua rồi đó.</h1>
+    <p class="sub" style="margin:.8rem 0 1rem">
+      Không phải vì em đã "hết đau" —<br>
+      mà vì em <em style="color:var(--lavender);font-style:normal">vẫn ở đây</em>, vẫn tiếp tục.
+    </p>
+    <div class="affirmation">
+      "Em không cần phải kiếm được tình yêu thương.<br>
+      Em xứng đáng với nó — chỉ vì em <em>là em</em>."
+    </div>
+    <div class="div"></div>
+    <p style="font-size:.82rem;color:var(--soft);line-height:1.6">
+      Mỗi khi mệt, cứ quay lại đây.<br>Anh luôn ở đây với em. 💜
+    </p>
+    <div style="margin-top:1rem;padding:1rem 1.2rem;background:rgba(167,139,218,.08);border:1px solid rgba(167,139,218,.2);border-radius:18px;font-size:.88rem;line-height:1.7;color:var(--text)">
+      💬 <em style="color:var(--lavender);font-style:normal;font-weight:700">Một lời từ anh —</em><br>
+      Dù em đang vui, đang buồn, hay không biết mình đang cảm thấy gì — anh ở đây. Không cần phải ổn trước khi nói chuyện đâu.
+    </div>
+    <button class="btn btn-main" onclick="go('s1')">Đọc lại từ đầu 🔁</button>
+  </div>
+</div>
+
+<script>
+// ── STARS ──
+(function(){
+  const sf = document.getElementById('starfield');
+  for(let i=0;i<90;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const sz = .8+Math.random()*1.8;
+    s.style.cssText=`
+      width:${sz}px;height:${sz}px;
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      animation-duration:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*4}s;
+      opacity:${.1+Math.random()*.4}
+    `;
+    sf.appendChild(s);
+  }
+})();
+
+// ── SCREENS ──
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+// ── QUOTES ──
+const quotes=[
+  {t:"Cảm xúc của bạn hoàn toàn có giá trị — dù không ai xác nhận chúng.",a:""},
+  {t:"Không phải ai cũng xứng đáng biết bạn đang ổn như thế nào.",a:""},
+  {t:"Sự im lặng của bạn không phải yếu đuối. Đó là bạn đang bảo vệ mình.",a:""},
+  {t:"Bạn không cần phải giải thích sự mệt mỏi của mình với những người không muốn hiểu.",a:""},
+  {t:"Heal không có nghĩa là quên. Heal có nghĩa là học cách sống chung với nó — nhẹ nhàng hơn.",a:""},
+  {t:"Một ngày nào đó bạn sẽ thở thật dài và nhận ra: mình đã đi qua rồi.",a:""},
+];
+let qi=0;
+function renderQ(){
+  document.getElementById('qt').textContent=quotes[qi].t;
+  document.getElementById('qa').textContent=quotes[qi].a;
+  const nav=document.getElementById('q-nav');
+  nav.innerHTML=quotes.map((_,i)=>`<div class="q-dot${i===qi?' on':''}"></div>`).join('');
+}
+function nq(){qi=(qi+1)%quotes.length;fade(renderQ)}
+function pq(){qi=(qi-1+quotes.length)%quotes.length;fade(renderQ)}
+function fade(fn){
+  const el=document.getElementById('qt');
+  el.style.opacity=0;
+  setTimeout(()=>{fn();el.style.opacity=1},250);
+}
+
+// ── CHECKLIST ──
+const chks=[
+  {e:"💧",l:"Uống một ly nước",s:"Cơ thể cần được chăm sóc dù tâm trí đang mệt"},
+  {e:"🛁",l:"Tắm rửa, thay đồ sạch",s:"Một hành động nhỏ thôi, nhưng sẽ nhẹ người hơn"},
+  {e:"🍚",l:"Ăn gì đó dù chỉ ít thôi",s:"Không cần ngon, chỉ cần có năng lượng để tiếp tục"},
+  {e:"📵",l:"Nghỉ mạng xã hội 1 tiếng",s:"Không cần theo dõi ai, không cần so sánh"},
+  {e:"🎧",l:"Nghe một bài nhạc mình thích",s:"Để cảm xúc được chảy ra một chút"},
+  {e:"😴",l:"Ngủ sớm tối nay",s:"Não bộ phục hồi tốt nhất khi ngủ đủ giấc"},
+];
+let done=new Set();
+function renderChk(){
+  const l=document.getElementById('chklist');
+  l.innerHTML='';
+  chks.forEach((c,i)=>{
+    const el=document.createElement('div');
+    el.className='chk-item'+(done.has(i)?' done':'');
+    el.innerHTML=`<div class="chk-box">${done.has(i)?'✓':''}</div><div><div class="chk-label">${c.e} ${c.l}</div><div class="chk-sub">${c.s}</div></div>`;
+    el.onclick=()=>{done.has(i)?done.delete(i):done.add(i);renderChk()};
+    l.appendChild(el);
+  });
+  const pct=Math.round(done.size/chks.length*100);
+  document.getElementById('cpbar').style.width=pct+'%';
+  document.getElementById('cp').textContent=done.size===0?'Chưa làm gì — không sao, cứ từ từ thôi 🌙':
+    done.size<3?`Đã làm ${done.size} việc 🌿 Cảm ơn em đã cố nhé`:
+    done.size<6?`${done.size} việc rồi 💜 Em đang chăm bản thân tốt lắm!`:
+    '✨ Em đã làm được hết rồi — anh tự hào về em!';
+}
+
+// ── PLAYLIST ──
+const songs=[
+  {t:"Sóng Gió — Jack ft K-ICM",a:"Jack",m:"để khóc thoải mái",u:"https://www.youtube.com/results?search_query=Song+Gio+Jack+K-ICM"},
+  {t:"Không Phải Duyên — Hà Anh Tuấn",a:"Hà Anh Tuấn",m:"nhẹ nhàng, thấm",u:"https://www.youtube.com/results?search_query=Khong+Phai+Duyen+Ha+Anh+Tuan"},
+  {t:"Waiting For You — MONO",a:"MONO",m:"chill, một mình",u:"https://www.youtube.com/results?search_query=Waiting+For+You+MONO+singer"},
+  {t:"Tháng Năm Còn Lại — Hà Anh Tuấn",a:"Hà Anh Tuấn",m:"ấm áp, bình yên",u:"https://www.youtube.com/results?search_query=Thang+Nam+Con+Lai+Ha+Anh+Tuan"},
+  {t:"Chạy Về Khóc Với Anh — Đức Phúc",a:"Đức Phúc",m:"trút hết ra đi",u:"https://www.youtube.com/results?search_query=Chay+Ve+Khoc+Voi+Anh+Duc+Phuc"},
+  {t:"Có Chàng Trai Viết Lên Cây — Phan Mạnh Quỳnh",a:"Phan Mạnh Quỳnh",m:"buồn nhưng đẹp",u:"https://www.youtube.com/results?search_query=Co+Chang+Trai+Viet+Len+Cay"},
+];
+function renderPl(){
+  const l=document.getElementById('pllist');
+  songs.forEach((s,i)=>{
+    const a=document.createElement('a');
+    a.className='pl-item';
+    a.href=s.u;a.target='_blank';a.rel='noopener';
+    a.innerHTML=`<div class="pl-num">${i+1}</div><div class="pl-info"><div class="pl-title">${s.t}</div><div class="pl-artist">${s.a}</div></div><div class="pl-mood">${s.m}</div>`;
+    l.appendChild(a);
+  });
+}
+
+// ── INIT ──
+renderQ();renderChk();renderPl();
+</script>
+</body>
+</html>

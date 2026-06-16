@@ -1,0 +1,1428 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Gửi bạn nhỏ 🌸</title>
+    <meta
+      name="description"
+      content="Một trang nhỏ gửi đến bạn — vì hôm nay có người muốn chia sẻ cùng bạn."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :root {
+        --bg: #fdf6f0;
+        --bg2: #fef9f4;
+        --card: #ffffff;
+        --card-border: rgba(210, 170, 140, 0.2);
+        --peach: #f5a576;
+        --peach-soft: #fce4d4;
+        --lavender: #b8a9d4;
+        --lavender-soft: #ede6f5;
+        --mint: #8ecfb8;
+        --mint-soft: #d9f2e8;
+        --pink: #e8829a;
+        --pink-soft: #fce0e7;
+        --sky: #8dc0e8;
+        --sky-soft: #deeef8;
+        --text: #4a3f5c;
+        --text-soft: #7d6f92;
+        --text-muted: #a89bb8;
+        --shadow:
+          0 8px 32px rgba(180, 150, 120, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
+        --shadow-lg:
+          0 16px 48px rgba(180, 150, 120, 0.15), 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Quicksand", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* ═══ Background decoration ═══ */
+      .bg-watercolor {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: url("./assets/watercolor_bg.png") center/cover no-repeat;
+        opacity: 0.12;
+      }
+
+      /* Floating pastel orbs */
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(80px);
+        animation: float ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        33% {
+          transform: translate(15px, -20px) scale(1.05);
+        }
+        66% {
+          transform: translate(-10px, 10px) scale(0.95);
+        }
+      }
+
+      /* Floating petals */
+      .petal {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        font-size: 1.2rem;
+        opacity: 0.35;
+        animation: petalFall linear infinite;
+      }
+      @keyframes petalFall {
+        0% {
+          transform: translateY(-20px) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.35;
+        }
+        90% {
+          opacity: 0.35;
+        }
+        100% {
+          transform: translateY(calc(100vh + 20px)) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* ═══ Screen system ═══ */
+      .screen {
+        display: none;
+        min-height: 100vh;
+        min-height: 100dvh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1.2rem;
+        position: relative;
+        z-index: 1;
+      }
+      .screen.on {
+        display: flex;
+      }
+
+      /* ═══ Card ═══ */
+      .card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 28px;
+        padding: 2rem 1.6rem;
+        border: 1px solid var(--card-border);
+        width: 100%;
+        max-width: 420px;
+        box-shadow: var(--shadow-lg);
+        animation: riseIn 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes riseIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* ═══ Typography ═══ */
+      .script {
+        font-family: "Lora", serif;
+      }
+      h1.hero {
+        font-family: "Lora", serif;
+        font-size: 1.85rem;
+        line-height: 1.35;
+        color: var(--text);
+        font-weight: 400;
+        font-style: italic;
+      }
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.4;
+      }
+      .sub {
+        color: var(--text-soft);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-top: 0.5rem;
+      }
+
+      /* ═══ Divider ═══ */
+      .divider {
+        height: 1px;
+        margin: 1.2rem 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--card-border),
+          transparent
+        );
+      }
+
+      /* ═══ Button ═══ */
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        width: 100%;
+        padding: 0.95rem 1.2rem;
+        border-radius: 50px;
+        border: none;
+        font-family: "Quicksand", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        margin-top: 0.9rem;
+        letter-spacing: 0.01em;
+      }
+      .btn-main {
+        background: linear-gradient(135deg, var(--peach), #f0b48e);
+        color: white;
+        box-shadow: 0 4px 16px rgba(245, 165, 118, 0.35);
+      }
+      .btn-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(245, 165, 118, 0.45);
+      }
+      .btn-main:active {
+        transform: scale(0.97);
+      }
+
+      .btn-soft {
+        background: var(--lavender-soft);
+        color: var(--lavender);
+        border: 1px solid rgba(184, 169, 212, 0.3);
+      }
+      .btn-soft:active {
+        transform: scale(0.97);
+        opacity: 0.8;
+      }
+
+      /* ═══ Progress bar ═══ */
+      .pbar-wrap {
+        margin-bottom: 1.4rem;
+      }
+      .pbar-track {
+        height: 4px;
+        border-radius: 2px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.06);
+      }
+      .pbar-fill {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.5s ease;
+        background: linear-gradient(
+          90deg,
+          var(--peach),
+          var(--lavender),
+          var(--mint)
+        );
+      }
+      .pbar-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 0.4rem;
+        text-align: right;
+        font-weight: 600;
+      }
+
+      /* ═══ SCREEN 1 — Welcome ═══ */
+      .welcome-emoji {
+        font-size: 3.5rem;
+        display: block;
+        text-align: center;
+        margin-bottom: 0.8rem;
+        animation: wave 3s ease-in-out infinite;
+      }
+      @keyframes wave {
+        0%,
+        100% {
+          transform: rotate(-5deg) scale(1);
+        }
+        25% {
+          transform: rotate(8deg) scale(1.05);
+        }
+        50% {
+          transform: rotate(-3deg) scale(1);
+        }
+        75% {
+          transform: rotate(6deg) scale(1.02);
+        }
+      }
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        justify-content: center;
+      }
+      .tag {
+        border-radius: 20px;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        border: 1px solid;
+        transition: transform 0.2s;
+      }
+      .tag:nth-child(1) {
+        background: var(--peach-soft);
+        color: var(--peach);
+        border-color: rgba(245, 165, 118, 0.25);
+      }
+      .tag:nth-child(2) {
+        background: var(--lavender-soft);
+        color: var(--lavender);
+        border-color: rgba(184, 169, 212, 0.25);
+      }
+      .tag:nth-child(3) {
+        background: var(--mint-soft);
+        color: var(--mint);
+        border-color: rgba(142, 207, 184, 0.25);
+      }
+
+      /* ═══ Bubbles ═══ */
+      .bubbles {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        margin: 1rem 0;
+      }
+      .bubble {
+        border-radius: 18px 18px 18px 6px;
+        padding: 0.95rem 1.1rem;
+        font-size: 0.9rem;
+        line-height: 1.7;
+        color: var(--text);
+        animation: fadeUp 0.4s ease both;
+        border: 1px solid;
+      }
+      .bubble:nth-child(odd) {
+        background: var(--peach-soft);
+        border-color: rgba(245, 165, 118, 0.2);
+      }
+      .bubble:nth-child(even) {
+        background: var(--lavender-soft);
+        border-color: rgba(184, 169, 212, 0.2);
+      }
+      .bubble em {
+        color: var(--pink);
+        font-style: normal;
+        font-weight: 700;
+      }
+      .bubble strong {
+        color: var(--lavender);
+        font-weight: 700;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .bubble:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .bubble:nth-child(3) {
+        animation-delay: 0.16s;
+      }
+      .bubble:nth-child(4) {
+        animation-delay: 0.24s;
+      }
+
+      /* ═══ Quote frame ═══ */
+      .quote-frame {
+        border-radius: 22px;
+        padding: 1.6rem 1.3rem;
+        margin: 1rem 0;
+        min-height: 130px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          var(--peach-soft),
+          var(--lavender-soft)
+        );
+        border: 1px solid rgba(210, 170, 140, 0.15);
+      }
+      .q-text {
+        font-family: "Lora", serif;
+        font-style: italic;
+        font-size: 1.02rem;
+        line-height: 1.75;
+        color: var(--text);
+        transition: opacity 0.3s ease;
+      }
+      .q-author {
+        margin-top: 0.7rem;
+        font-size: 0.76rem;
+        color: var(--text-muted);
+        font-weight: 700;
+      }
+      .q-nav {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 0.7rem;
+      }
+      .q-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        transition: all 0.25s;
+      }
+      .q-dot.on {
+        background: var(--peach);
+        width: 18px;
+        border-radius: 3px;
+      }
+      .q-arrows {
+        display: flex;
+        gap: 0.7rem;
+        justify-content: center;
+        margin-top: 0.6rem;
+      }
+      .q-arr {
+        background: white;
+        border: 1px solid var(--card-border);
+        color: var(--text-soft);
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .q-arr:hover {
+        background: var(--peach-soft);
+        color: var(--peach);
+      }
+
+      /* ═══ Letter ═══ */
+      .letter {
+        border-radius: 22px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        position: relative;
+        background: linear-gradient(145deg, #fffaf6, #fdf4ef);
+        border: 1px solid rgba(210, 170, 140, 0.2);
+        box-shadow: 0 4px 16px rgba(180, 150, 120, 0.08);
+      }
+      .letter::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 1.5rem;
+        right: 1.5rem;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--peach-soft),
+          transparent
+        );
+      }
+      .letter p {
+        font-size: 0.9rem;
+        line-height: 1.85;
+        color: var(--text);
+        margin-bottom: 0.85rem;
+      }
+      .letter p:last-of-type {
+        margin-bottom: 0;
+      }
+      .letter-sig {
+        font-family: "Lora", serif;
+        font-style: italic;
+        color: var(--peach);
+        font-size: 1.05rem;
+        margin-top: 0.6rem;
+      }
+      .letter em {
+        color: var(--lavender);
+        font-style: normal;
+        font-weight: 600;
+      }
+
+      /* ═══ Checklist ═══ */
+      .chk-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin: 1rem 0;
+      }
+      .chk-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        background: white;
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 0.85rem 1rem;
+        cursor: pointer;
+        transition: all 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .chk-item:hover {
+        transform: translateX(4px);
+      }
+      .chk-item.done {
+        border-color: rgba(142, 207, 184, 0.4);
+        background: var(--mint-soft);
+      }
+      .chk-box {
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        border: 2px solid var(--text-muted);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        transition: all 0.25s;
+        margin-top: 1px;
+        background: transparent;
+      }
+      .chk-item.done .chk-box {
+        background: var(--mint);
+        border-color: var(--mint);
+        color: white;
+      }
+      .chk-label {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.35;
+      }
+      .chk-sub {
+        font-size: 0.76rem;
+        color: var(--text-muted);
+        margin-top: 0.15rem;
+        line-height: 1.45;
+      }
+      .chk-progress {
+        font-size: 0.8rem;
+        color: var(--text-soft);
+        text-align: center;
+        margin: 0.3rem 0;
+        font-weight: 600;
+      }
+
+      /* ═══ Final ═══ */
+      .final-glow {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(245, 165, 118, 0.2),
+          transparent 70%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+        margin: 0 auto 1rem;
+        animation: glow 3s ease-in-out infinite;
+      }
+      @keyframes glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(245, 165, 118, 0.1);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(245, 165, 118, 0.25);
+        }
+      }
+      .affirmation {
+        border-radius: 20px;
+        padding: 1.3rem;
+        margin: 1rem 0;
+        font-family: "Lora", serif;
+        font-style: italic;
+        font-size: 0.98rem;
+        line-height: 1.75;
+        color: var(--text);
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          var(--peach-soft),
+          var(--mint-soft)
+        );
+        border: 1px solid rgba(210, 170, 140, 0.15);
+      }
+
+      /* ═══ Flower decoration ═══ */
+      .flower-deco {
+        width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto 0.8rem;
+        opacity: 0.85;
+        animation: gentleBob 4s ease-in-out infinite;
+      }
+      @keyframes gentleBob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-2deg);
+        }
+        50% {
+          transform: translateY(-6px) rotate(2deg);
+        }
+      }
+
+      /* ═══ Responsive ═══ */
+      @media (min-width: 500px) {
+        .card {
+          padding: 2.5rem 2rem;
+        }
+        h1.hero {
+          font-size: 2.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-watercolor"></div>
+
+    <!-- Floating orbs -->
+    <div
+      class="orb"
+      style="
+        width: 300px;
+        height: 300px;
+        background: rgba(245, 165, 118, 0.15);
+        top: -80px;
+        left: -100px;
+        animation-duration: 14s;
+      "
+    ></div>
+    <div
+      class="orb"
+      style="
+        width: 250px;
+        height: 250px;
+        background: rgba(184, 169, 212, 0.15);
+        bottom: 5%;
+        right: -80px;
+        animation-duration: 11s;
+        animation-delay: -3s;
+      "
+    ></div>
+    <div
+      class="orb"
+      style="
+        width: 200px;
+        height: 200px;
+        background: rgba(142, 207, 184, 0.12);
+        top: 40%;
+        left: -50px;
+        animation-duration: 16s;
+        animation-delay: -7s;
+      "
+    ></div>
+
+    <!-- ══════════════════════════════
+     MÀN 1 — CHÀO
+══════════════════════════════ -->
+    <div class="screen on" id="s1">
+      <div class="card" style="text-align: center">
+        <img src="./assets/flower.png" alt="" class="flower-deco" />
+        <h1 class="hero">Này, dừng lại một chút nha...</h1>
+        <p class="sub" style="margin-top: 0.9rem">
+          Trang nhỏ này được làm<br />vì có người muốn chia sẻ cùng bạn.
+        </p>
+        <div class="divider"></div>
+        <p
+          style="font-size: 0.87rem; color: var(--text-soft); line-height: 1.7"
+        >
+          Không cần gượng vui.<br />Không cần giải thích gì cả.<br />
+          Cứ đọc nhẹ nhàng thôi,
+          <em style="color: var(--peach); font-style: normal; font-weight: 600"
+            >vì bạn xứng đáng được quan tâm</em
+          >.
+        </p>
+        <div class="tag-row">
+          <span class="tag">🌸 nhẹ nhàng</span>
+          <span class="tag">🌿 không phán xét</span>
+          <span class="tag">☀️ luôn ở đây</span>
+        </div>
+        <button class="btn btn-main" onclick="go('s2')">Vào đây nha 🌷</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     MÀN 2 — CHIA SẺ
+══════════════════════════════ -->
+    <div class="screen" id="s2">
+      <div class="card">
+        <div class="pbar-wrap">
+          <div class="pbar-track">
+            <div class="pbar-fill" style="width: 16%"></div>
+          </div>
+          <div class="pbar-label">1 / 6</div>
+        </div>
+        <h2>Mình hiểu bạn đang mệt 🌧</h2>
+        <div class="bubbles">
+          <div class="bubble">
+            Có những ngày cảm giác mọi thứ nặng lắm — dù không nói ra được vì
+            sao. <em>Điều đó hoàn toàn bình thường</em>.
+          </div>
+          <div class="bubble">
+            Buồn không có nghĩa là yếu đuối. Đôi khi, buồn chỉ là dấu hiệu của
+            một <strong>trái tim biết cảm nhận</strong>.
+          </div>
+          <div class="bubble">
+            Bạn không cần phải giải thích cảm xúc của mình với ai cả.
+            <em>Cảm xúc của bạn luôn có giá trị</em> — dù không ai xác nhận.
+          </div>
+        </div>
+        <button class="btn btn-main" onclick="go('s3')">Tiếp nha 🌸</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     MÀN 3 — QUOTES
+══════════════════════════════ -->
+    <div class="screen" id="s3">
+      <div class="card">
+        <div class="pbar-wrap">
+          <div class="pbar-track">
+            <div class="pbar-fill" style="width: 33%"></div>
+          </div>
+          <div class="pbar-label">2 / 6</div>
+        </div>
+        <h2>Mấy câu mình thấy hay<br />muốn gửi cho bạn ✨</h2>
+        <p class="sub">Vuốt qua để đọc từng câu nha</p>
+        <div class="quote-frame">
+          <div class="q-text" id="qt"></div>
+          <div class="q-author" id="qa"></div>
+        </div>
+        <div class="q-nav" id="q-nav"></div>
+        <div class="q-arrows">
+          <button class="q-arr" onclick="pq()">‹</button>
+          <button class="q-arr" onclick="nq()">›</button>
+        </div>
+        <button
+          class="btn btn-main"
+          style="margin-top: 1.2rem"
+          onclick="go('s4')"
+        >
+          Đọc thư nè 💌
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     MÀN 4 — THƯ
+══════════════════════════════ -->
+    <div class="screen" id="s4">
+      <div class="card">
+        <div class="pbar-wrap">
+          <div class="pbar-track">
+            <div class="pbar-fill" style="width: 50%"></div>
+          </div>
+          <div class="pbar-label">3 / 6</div>
+        </div>
+        <h2>Gửi bạn 💌</h2>
+        <div class="letter">
+          <p>Này,</p>
+          <p>
+            Nói chuyện với bạn dạo gần đây, mình thấy bạn đang chịu nhiều thứ
+            quá. Mình không rành chuyện an ủi, nhưng mình muốn bạn biết là
+            <em>có người đang quan tâm bạn thật sự</em>.
+          </p>
+          <p>
+            Bạn không cần phải cố tỏ ra vui hay ổn với ai hết. Buồn thì cứ buồn,
+            mệt thì cứ nghỉ —
+            <em>không ai được phép phán xét bạn vì điều đó</em>.
+          </p>
+          <p>
+            Có gì muốn kể thì cứ nhắn, mình nghe. Không muốn kể cũng không sao.
+            Chỉ cần bạn biết là <em>bạn không phải một mình</em>. 🌿
+          </p>
+          <div class="letter-sig">— Người luôn sẵn lòng lắng nghe 🌸</div>
+        </div>
+        <button class="btn btn-main" onclick="go('s5')">Tiếp nha 🌿</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     MÀN 5 — SELF-CARE
+══════════════════════════════ -->
+    <div class="screen" id="s5">
+      <div class="card">
+        <div class="pbar-wrap">
+          <div class="pbar-track">
+            <div class="pbar-fill" style="width: 66%"></div>
+          </div>
+          <div class="pbar-label">4 / 6</div>
+        </div>
+        <h2>Hôm nay, thử chăm mình<br />một chút nha 🌿</h2>
+        <p class="sub">
+          Không cần làm hết đâu — làm được cái nào thì tốt cái đó 🌙
+        </p>
+        <div class="chk-progress" id="cp"></div>
+        <div class="pbar-track" style="margin-bottom: 1rem">
+          <div class="pbar-fill" id="cpbar" style="width: 0%"></div>
+        </div>
+        <div class="chk-list" id="chklist"></div>
+        <button class="btn btn-main" onclick="go('s6')">Tiếp nha 🎵</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     MÀN 6 — PLAYLIST
+══════════════════════════════ -->
+    <div class="screen" id="s6">
+      <div class="card">
+        <div class="pbar-wrap">
+          <div class="pbar-track">
+            <div class="pbar-fill" style="width: 83%"></div>
+          </div>
+          <div class="pbar-label">5 / 6</div>
+        </div>
+        <h2>Mấy bài nhạc<br />nghe cho nhẹ lòng 🎧</h2>
+        <p class="sub">Bấm vào bài nào thích nha — nghe cho chill thôi 🌙</p>
+
+        <!-- Mini Audio Player -->
+        <div class="audio-player" id="audioPlayer">
+          <div class="ap-top">
+            <button class="ap-btn" id="apBtn" onclick="togglePlay()">▶</button>
+            <div class="ap-info">
+              <div class="ap-title" id="apTitle">Chọn bài để nghe...</div>
+              <div class="ap-artist" id="apArtist"></div>
+            </div>
+          </div>
+          <div class="ap-progress-wrap" onclick="seekAudio(event)">
+            <div class="ap-progress" id="apProgress"></div>
+          </div>
+          <div class="ap-time">
+            <span id="apCurrent">0:00</span>
+            <span id="apDuration">0:00</span>
+          </div>
+        </div>
+        <audio id="audioEl"></audio>
+
+        <div class="pl-list" id="pllist"></div>
+        <button class="btn btn-main" onclick="go('s7')">Gần xong rồi 💛</button>
+      </div>
+    </div>
+
+    <!-- Playlist + Audio Player styles -->
+    <style>
+      .pl-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        margin: 1rem 0;
+      }
+      .pl-item {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        background: white;
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 0.8rem 0.95rem;
+        cursor: pointer;
+        transition: all 0.25s;
+        text-decoration: none;
+      }
+      .pl-item:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      }
+      .pl-item:active {
+        transform: scale(0.98);
+        opacity: 0.8;
+      }
+      .pl-item.playing {
+        background: linear-gradient(
+          135deg,
+          var(--peach-soft),
+          var(--lavender-soft)
+        );
+        border-color: var(--peach);
+        box-shadow: 0 4px 20px rgba(245, 165, 118, 0.2);
+      }
+      .pl-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+      .pl-item:nth-child(odd) .pl-num {
+        background: var(--peach-soft);
+        color: var(--peach);
+      }
+      .pl-item:nth-child(even) .pl-num {
+        background: var(--lavender-soft);
+        color: var(--lavender);
+      }
+      .pl-item.playing .pl-num {
+        background: var(--peach) !important;
+        color: white !important;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+      .pl-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .pl-title {
+        font-size: 0.86rem;
+        font-weight: 700;
+        color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .pl-artist {
+        font-size: 0.74rem;
+        color: var(--text-muted);
+        margin-top: 0.1rem;
+      }
+      .pl-mood {
+        font-size: 0.72rem;
+        font-weight: 700;
+        border-radius: 20px;
+        padding: 0.2rem 0.6rem;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .pl-item:nth-child(odd) .pl-mood {
+        color: var(--mint);
+        background: var(--mint-soft);
+      }
+      .pl-item:nth-child(even) .pl-mood {
+        color: var(--pink);
+        background: var(--pink-soft);
+      }
+
+      /* Audio Player */
+      .audio-player {
+        background: linear-gradient(135deg, #fffaf6, var(--lavender-soft));
+        border: 1px solid rgba(210, 170, 140, 0.2);
+        border-radius: 20px;
+        padding: 1rem 1.2rem 0.8rem;
+        margin: 1rem 0 0.5rem;
+        box-shadow: 0 4px 16px rgba(180, 150, 120, 0.08);
+      }
+      .ap-top {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .ap-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, var(--peach), #f0b48e);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+        box-shadow: 0 3px 12px rgba(245, 165, 118, 0.3);
+      }
+      .ap-btn:hover {
+        transform: scale(1.05);
+      }
+      .ap-btn:active {
+        transform: scale(0.95);
+      }
+      .ap-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .ap-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .ap-artist {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 0.1rem;
+      }
+      .ap-progress-wrap {
+        height: 6px;
+        background: rgba(0, 0, 0, 0.06);
+        border-radius: 3px;
+        margin-top: 0.7rem;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .ap-progress {
+        height: 100%;
+        width: 0%;
+        border-radius: 3px;
+        background: linear-gradient(90deg, var(--peach), var(--lavender));
+        transition: width 0.1s linear;
+      }
+      .ap-time {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.68rem;
+        color: var(--text-muted);
+        margin-top: 0.3rem;
+        font-weight: 600;
+      }
+    </style>
+
+    <!-- ══════════════════════════════
+     MÀN 7 — FINAL
+══════════════════════════════ -->
+    <div class="screen" id="s7">
+      <div class="card" style="text-align: center">
+        <div class="pbar-wrap">
+          <div class="pbar-track">
+            <div class="pbar-fill" style="width: 100%"></div>
+          </div>
+          <div class="pbar-label">6 / 6 ✨</div>
+        </div>
+        <div class="final-glow">🌻</div>
+        <h1 class="hero">Bạn đã đọc hết rồi đó.</h1>
+        <p class="sub" style="margin: 0.8rem 0 1rem">
+          Cảm ơn bạn đã dừng lại<br />và cho mình cơ hội được chia sẻ cùng bạn.
+        </p>
+        <div class="affirmation">
+          "Bạn không cần phải ổn ngay lập tức.<br />
+          Nhưng hãy nhớ rằng — bạn
+          <em style="color: var(--peach); font-style: normal; font-weight: 600"
+            >không hề một mình</em
+          >
+          đâu."
+        </div>
+        <div class="divider"></div>
+        <p
+          style="font-size: 0.84rem; color: var(--text-soft); line-height: 1.7"
+        >
+          Khi nào cần, cứ quay lại đây nha.<br />Lúc nào cũng có người sẵn lòng
+          lắng nghe. 🌸
+        </p>
+        <div
+          style="
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
+            background: linear-gradient(
+              135deg,
+              var(--peach-soft),
+              var(--lavender-soft)
+            );
+            border: 1px solid rgba(210, 170, 140, 0.15);
+            border-radius: 18px;
+            font-size: 0.86rem;
+            line-height: 1.7;
+            color: var(--text);
+          "
+        >
+          💬
+          <em style="color: var(--peach); font-style: normal; font-weight: 700"
+            >Một lời nhắn —</em
+          ><br />
+          Dù bạn đang vui hay buồn, muốn nói hay chỉ muốn im lặng — mình luôn ở
+          đây. Cứ thoải mái nhắn bất cứ lúc nào nhé.
+        </div>
+        <button class="btn btn-main" onclick="go('s1')">
+          Đọc lại từ đầu 🔁
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // ═══ PETALS ═══
+      (function () {
+        const emojis = ["🌸", "🌷", "🍃", "✿", "❀", "🌼"];
+        const body = document.body;
+        for (let i = 0; i < 15; i++) {
+          const p = document.createElement("div");
+          p.className = "petal";
+          p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          const dur = 12 + Math.random() * 18;
+          p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      font-size: ${0.8 + Math.random() * 0.8}rem;
+      animation-duration: ${dur}s;
+      animation-delay: ${Math.random() * dur}s;
+      opacity: ${0.15 + Math.random() * 0.2};
+    `;
+          body.appendChild(p);
+        }
+      })();
+
+      // ═══ SCREENS ═══
+      function go(id) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("on"));
+        const target = document.getElementById(id);
+        target.classList.add("on");
+        window.scrollTo(0, 0);
+        // Re-trigger card animation
+        const card = target.querySelector(".card");
+        if (card) {
+          card.style.animation = "none";
+          card.offsetHeight; // trigger reflow
+          card.style.animation = "";
+        }
+      }
+
+      // ═══ QUOTES ═══
+      const quotes = [
+        {
+          t: 'Có những ngày chỉ cần ai đó nói "mình ở đây" — chỉ vậy thôi cũng đủ rồi.',
+          a: "",
+        },
+        {
+          t: "Bạn không cần phải mạnh mẽ mọi lúc. Đôi khi, cho phép mình buồn cũng là một dạng dũng cảm.",
+          a: "",
+        },
+        {
+          t: "Mưa rồi sẽ tạnh, trời rồi sẽ sáng. Nhưng ngay cả lúc mưa, bạn vẫn đẹp — theo cách riêng của mình.",
+          a: "",
+        },
+        {
+          t: "Cảm xúc của bạn hoàn toàn có giá trị — dù không ai nói cho bạn điều đó.",
+          a: "",
+        },
+        {
+          t: "Heal không có nghĩa là quên. Heal là học cách sống chung với nó — nhẹ nhàng hơn.",
+          a: "",
+        },
+        {
+          t: "Một ngày nào đó bạn sẽ thở thật sâu và nhận ra: mình đã đi qua rồi.",
+          a: "",
+        },
+      ];
+      let qi = 0;
+
+      function renderQ() {
+        document.getElementById("qt").textContent = quotes[qi].t;
+        document.getElementById("qa").textContent = quotes[qi].a;
+        const nav = document.getElementById("q-nav");
+        nav.innerHTML = quotes
+          .map((_, i) => `<div class="q-dot${i === qi ? " on" : ""}"></div>`)
+          .join("");
+      }
+
+      function nq() {
+        qi = (qi + 1) % quotes.length;
+        fade(renderQ);
+      }
+      function pq() {
+        qi = (qi - 1 + quotes.length) % quotes.length;
+        fade(renderQ);
+      }
+
+      function fade(fn) {
+        const el = document.getElementById("qt");
+        el.style.opacity = 0;
+        setTimeout(() => {
+          fn();
+          el.style.opacity = 1;
+        }, 250);
+      }
+
+      // Touch swipe for quotes
+      let touchStartX = 0;
+      document.querySelector(".quote-frame")?.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.touches[0].clientX;
+        },
+        { passive: true },
+      );
+      document.querySelector(".quote-frame")?.addEventListener(
+        "touchend",
+        (e) => {
+          const diff = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(diff) > 50) {
+            diff < 0 ? nq() : pq();
+          }
+        },
+        { passive: true },
+      );
+
+      // ═══ CHECKLIST ═══
+      const chks = [
+        {
+          e: "💧",
+          l: "Uống một ly nước",
+          s: "Cơ thể cần được chăm dù tâm trí đang mệt",
+        },
+        {
+          e: "🌬️",
+          l: "Hít thở sâu 5 lần",
+          s: "Hít vào 4 giây, giữ 4 giây, thở ra 6 giây",
+        },
+        {
+          e: "🍚",
+          l: "Ăn gì đó dù chỉ ít thôi",
+          s: "Không cần ngon, chỉ cần có năng lượng",
+        },
+        {
+          e: "📵",
+          l: "Nghỉ mạng xã hội 30 phút",
+          s: "Cho mình một khoảng lặng nhỏ",
+        },
+        {
+          e: "🎧",
+          l: "Nghe một bài nhạc mình thích",
+          s: "Để cảm xúc được nhẹ nhàng một chút",
+        },
+        {
+          e: "😴",
+          l: "Ngủ sớm tối nay",
+          s: "Giấc ngủ giúp mọi thứ bớt nặng hơn nhiều",
+        },
+      ];
+      let done = new Set();
+
+      function renderChk() {
+        const l = document.getElementById("chklist");
+        l.innerHTML = "";
+        chks.forEach((c, i) => {
+          const el = document.createElement("div");
+          el.className = "chk-item" + (done.has(i) ? " done" : "");
+          el.innerHTML = `
+      <div class="chk-box">${done.has(i) ? "✓" : ""}</div>
+      <div>
+        <div class="chk-label">${c.e} ${c.l}</div>
+        <div class="chk-sub">${c.s}</div>
+      </div>`;
+          el.onclick = () => {
+            done.has(i) ? done.delete(i) : done.add(i);
+            renderChk();
+          };
+          l.appendChild(el);
+        });
+        const pct = Math.round((done.size / chks.length) * 100);
+        document.getElementById("cpbar").style.width = pct + "%";
+        document.getElementById("cp").textContent =
+          done.size === 0
+            ? "Chưa làm gì — không sao, cứ từ từ thôi 🌙"
+            : done.size < 3
+              ? `Đã làm ${done.size} việc 🌿 Tốt lắm rồi!`
+              : done.size < 6
+                ? `${done.size} việc rồi 💛 Bạn đang chăm mình tốt lắm!`
+                : "✨ Bạn đã làm hết rồi — thật giỏi!";
+      }
+
+      // ═══ PLAYLIST ═══
+      const songs = [
+        {
+          t: "Trạng Thái Mộng Mơ",
+          a: "Đỗ Hoàng Long",
+          m: "deep chill",
+          u: "./assets/music/[ 𝐃𝐞𝐞𝐩 𝐂𝐡𝐢𝐥𝐥 ] Trạng Thái Mộng Mơ - Đỗ Hoàng Long 🎧 Không Là Em Thì Ai Khác - ACV - Nhạc Việt DeepChill.mp3",
+        },
+        {
+          t: "Cry For Me",
+          a: "Michita ft. 愛海",
+          m: "sâu lắng",
+          u: "./assets/music/Cry For Me (feat. 愛海) - Michita.mp3",
+        },
+        {
+          t: "The Night We Met",
+          a: "Lord Huron",
+          m: "nhẹ nhàng",
+          u: "./assets/music/Lord Huron - The Night We Met (Official Lyric Video) - Lord Huron.mp3",
+        },
+        {
+          t: "Em Dạo Này",
+          a: "Ngọt",
+          m: "chill",
+          u: "./assets/music/Ngọt - Em dạo này (Official Music Video) - Ngọt.mp3",
+        },
+        {
+          t: "Lần Cuối",
+          a: "Ngọt",
+          m: "thấm",
+          u: "./assets/music/Ngọt - LẦN CUỐI (đi bên em xót xa người ơi) - Ngọt.mp3",
+        },
+        {
+          t: "Nightingale",
+          a: "Yanni",
+          m: "bình yên",
+          u: "./assets/music/Yanni-Nightingale - wmd10.mp3",
+        },
+        {
+          t: "Bài Này Chill Phết",
+          a: "Đen ft. MIN",
+          m: "vui lên",
+          u: "./assets/music/[LYRICS] Bài này chill phết - Đen ft. MIN - dreamy fool.mp3",
+        },
+      ];
+
+      let currentSongIdx = -1;
+      const audioEl = document.getElementById("audioEl");
+
+      function playSong(idx) {
+        if (currentSongIdx === idx && !audioEl.paused) {
+          audioEl.pause();
+          document.getElementById("apBtn").textContent = "▶";
+          return;
+        }
+        currentSongIdx = idx;
+        const s = songs[idx];
+        audioEl.src = s.u;
+        audioEl.play();
+        document.getElementById("apTitle").textContent = s.t;
+        document.getElementById("apArtist").textContent = s.a;
+        document.getElementById("apBtn").textContent = "⏸";
+        // Highlight playing item
+        document.querySelectorAll(".pl-item").forEach((el, i) => {
+          el.classList.toggle("playing", i === idx);
+          el.querySelector(".pl-num").textContent = i === idx ? "♪" : i + 1;
+        });
+      }
+
+      function togglePlay() {
+        if (currentSongIdx < 0) {
+          playSong(0);
+          return;
+        }
+        if (audioEl.paused) {
+          audioEl.play();
+          document.getElementById("apBtn").textContent = "⏸";
+        } else {
+          audioEl.pause();
+          document.getElementById("apBtn").textContent = "▶";
+        }
+      }
+
+      function seekAudio(e) {
+        if (!audioEl.duration) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        audioEl.currentTime = pct * audioEl.duration;
+      }
+
+      function fmtTime(s) {
+        if (isNaN(s)) return "0:00";
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return m + ":" + (sec < 10 ? "0" : "") + sec;
+      }
+
+      audioEl.addEventListener("timeupdate", () => {
+        if (!audioEl.duration) return;
+        const pct = (audioEl.currentTime / audioEl.duration) * 100;
+        document.getElementById("apProgress").style.width = pct + "%";
+        document.getElementById("apCurrent").textContent = fmtTime(
+          audioEl.currentTime,
+        );
+      });
+      audioEl.addEventListener("loadedmetadata", () => {
+        document.getElementById("apDuration").textContent = fmtTime(
+          audioEl.duration,
+        );
+      });
+      audioEl.addEventListener("ended", () => {
+        // Auto next song
+        const nextIdx = (currentSongIdx + 1) % songs.length;
+        playSong(nextIdx);
+      });
+
+      function renderPl() {
+        const l = document.getElementById("pllist");
+        songs.forEach((s, i) => {
+          const el = document.createElement("div");
+          el.className = "pl-item";
+          el.onclick = () => playSong(i);
+          el.innerHTML = `
+      <div class="pl-num">${i + 1}</div>
+      <div class="pl-info">
+        <div class="pl-title">${s.t}</div>
+        <div class="pl-artist">${s.a}</div>
+      </div>
+      <div class="pl-mood">${s.m}</div>`;
+          l.appendChild(el);
+        });
+      }
+
+      // ═══ INIT ═══
+      renderQ();
+      renderChk();
+      renderPl();
+    </script>
+  </body>
+</html>
