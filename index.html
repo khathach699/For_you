@@ -269,6 +269,13 @@
       }
 
       /* ═══ SCREEN 1 — Welcome ═══ */
+      .flower-deco {
+        max-width: 140px;
+        height: auto;
+        margin: 0 auto 1rem;
+        display: block;
+      }
+
       .welcome-emoji {
         font-size: 3.5rem;
         display: block;
@@ -380,13 +387,14 @@
         border-radius: 22px;
         padding: 1.6rem 1.3rem;
         margin: 1rem 0;
-        min-height: 130px;
+        height: 160px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
         position: relative;
+        overflow: hidden;
         background: linear-gradient(
           135deg,
           var(--peach-soft),
@@ -394,13 +402,37 @@
         );
         border: 1px solid rgba(210, 170, 140, 0.15);
       }
+      .q-content {
+        transition:
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, opacity;
+        width: 100%;
+      }
+      .q-content.slide-out-left {
+        transform: translateX(-40px);
+        opacity: 0;
+      }
+      .q-content.slide-out-right {
+        transform: translateX(40px);
+        opacity: 0;
+      }
+      .q-content.slide-in-left {
+        transform: translateX(40px);
+        opacity: 0;
+        transition: none;
+      }
+      .q-content.slide-in-right {
+        transform: translateX(-40px);
+        opacity: 0;
+        transition: none;
+      }
       .q-text {
         font-family: "Lora", serif;
         font-style: italic;
         font-size: 1.02rem;
         line-height: 1.75;
         color: var(--text);
-        transition: opacity 0.3s ease;
       }
       .q-author {
         margin-top: 0.7rem;
@@ -564,69 +596,6 @@
         font-weight: 600;
       }
 
-      /* ═══ Final ═══ */
-      .final-glow {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(245, 165, 118, 0.2),
-          transparent 70%
-        );
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.5rem;
-        margin: 0 auto 1rem;
-        animation: glow 3s ease-in-out infinite;
-      }
-      @keyframes glow {
-        0%,
-        100% {
-          box-shadow: 0 0 20px rgba(245, 165, 118, 0.1);
-        }
-        50% {
-          box-shadow: 0 0 40px rgba(245, 165, 118, 0.25);
-        }
-      }
-      .affirmation {
-        border-radius: 20px;
-        padding: 1.3rem;
-        margin: 1rem 0;
-        font-family: "Lora", serif;
-        font-style: italic;
-        font-size: 0.98rem;
-        line-height: 1.75;
-        color: var(--text);
-        text-align: center;
-        background: linear-gradient(
-          135deg,
-          var(--peach-soft),
-          var(--mint-soft)
-        );
-        border: 1px solid rgba(210, 170, 140, 0.15);
-      }
-
-      /* ═══ Flower decoration ═══ */
-      .flower-deco {
-        width: 120px;
-        height: auto;
-        display: block;
-        margin: 0 auto 0.8rem;
-        opacity: 0.85;
-        animation: gentleBob 4s ease-in-out infinite;
-      }
-      @keyframes gentleBob {
-        0%,
-        100% {
-          transform: translateY(0) rotate(-2deg);
-        }
-        50% {
-          transform: translateY(-6px) rotate(2deg);
-        }
-      }
-
       /* ═══ Responsive ═══ */
       @media (min-width: 500px) {
         .card {
@@ -698,11 +667,6 @@
             >vì bạn xứng đáng được quan tâm</em
           >.
         </p>
-        <div class="tag-row">
-          <span class="tag">🌸 nhẹ nhàng</span>
-          <span class="tag">🌿 không phán xét</span>
-          <span class="tag">☀️ luôn ở đây</span>
-        </div>
         <button class="btn btn-main" onclick="go('s2')">Vào đây nha 🌷</button>
       </div>
     </div>
@@ -721,16 +685,24 @@
         <h2>Mình hiểu bạn đang mệt 🌧</h2>
         <div class="bubbles">
           <div class="bubble">
-            Có những ngày cảm giác mọi thứ nặng lắm — dù không nói ra được vì
-            sao. <em>Điều đó hoàn toàn bình thường</em>.
+            Có những chuyện buồn từ quá khứ, dù đã qua nhưng thi thoảng vẫn để
+            lại những khoảng lặng mơ hồ.
+            <em
+              >Tổn thương không tự biến mất nếu vết thương lòng chưa được vỗ
+              về</em
+            >.
           </div>
           <div class="bubble">
-            Buồn không có nghĩa là yếu đuối. Đôi khi, buồn chỉ là dấu hiệu của
-            một <strong>trái tim biết cảm nhận</strong>.
+            Đôi khi những mối quan hệ xung quanh không như ta mong đợi, hoặc sự
+            thất vọng từ người mình từng trân trọng khiến bạn thấy tủi thân.
+            <strong
+              >Cảm giác cô độc giữa những hiểu lầm thực sự rất khó chịu</strong
+            >.
           </div>
           <div class="bubble">
-            Bạn không cần phải giải thích cảm xúc của mình với ai cả.
-            <em>Cảm xúc của bạn luôn có giá trị</em> — dù không ai xác nhận.
+            Nhưng bạn không cần phải cố gồng gượng hay cố chứng minh bản thân
+            với bất kỳ ai.
+            <em>Cảm xúc của bạn luôn xứng đáng được tôn trọng và lắng nghe</em>.
           </div>
         </div>
         <button class="btn btn-main" onclick="go('s3')">Tiếp nha 🌸</button>
@@ -751,8 +723,10 @@
         <h2>Mấy câu mình thấy hay<br />muốn gửi cho bạn ✨</h2>
         <p class="sub">Vuốt qua để đọc từng câu nha</p>
         <div class="quote-frame">
-          <div class="q-text" id="qt"></div>
-          <div class="q-author" id="qa"></div>
+          <div class="q-content" id="qContent">
+            <div class="q-text" id="qt"></div>
+            <div class="q-author" id="qa"></div>
+          </div>
         </div>
         <div class="q-nav" id="q-nav"></div>
         <div class="q-arrows">
@@ -784,18 +758,24 @@
         <div class="letter">
           <p>Này,</p>
           <p>
-            Nói chuyện với bạn dạo gần đây, mình thấy bạn đang chịu nhiều thứ
-            quá. Mình không rành chuyện an ủi, nhưng mình muốn bạn biết là
-            <em>có người đang quan tâm bạn thật sự</em>.
+            Mình biết dạo này bạn đang phải mang quá nhiều suy nghĩ cùng một
+            lúc. Những chuyện buồn dồn dập gõ cửa, từ quá khứ đến hiện tại,
+            khiến lòng bạn nặng trĩu.
+            <em>Đi qua những ngày như vậy thực sự chẳng dễ dàng chút nào</em>.
           </p>
           <p>
-            Bạn không cần phải cố tỏ ra vui hay ổn với ai hết. Buồn thì cứ buồn,
-            mệt thì cứ nghỉ —
-            <em>không ai được phép phán xét bạn vì điều đó</em>.
+            Bạn cứ để bản thân có khoảng nghỉ ngơi nhé. Không cần phải cố ép
+            mình bình yên ngay, cũng không ai bắt bạn phải hồi phục theo một
+            lịch trình định sẵn.
+            <em>Hãy ôm ấp và dịu dàng với chính cảm xúc thật của mình</em>.
           </p>
           <p>
-            Có gì muốn kể thì cứ nhắn, mình nghe. Không muốn kể cũng không sao.
-            Chỉ cần bạn biết là <em>bạn không phải một mình</em>. 🌿
+            Mình làm trang này không phải vì điều gì to tát cả. Chỉ đơn giản là
+            muốn bạn biết rằng:
+            <em
+              >bạn luôn được nhìn thấy, được thấu cảm và luôn có người quan tâm
+              bạn thật lòng</em
+            >. 🌿
           </p>
           <div class="letter-sig">— Người luôn sẵn lòng lắng nghe 🌸</div>
         </div>
@@ -1049,7 +1029,7 @@
 
     <!-- ══════════════════════════════
      MÀN 7 — FINAL
-══════════════════════════════ -->
+    ══════════════════════════════ -->
     <div class="screen" id="s7">
       <div class="card" style="text-align: center">
         <div class="pbar-wrap">
@@ -1058,52 +1038,76 @@
           </div>
           <div class="pbar-label">6 / 6 ✨</div>
         </div>
-        <div class="final-glow">🌻</div>
-        <h1 class="hero">Bạn đã đọc hết rồi đó.</h1>
-        <p class="sub" style="margin: 0.8rem 0 1rem">
-          Cảm ơn bạn đã dừng lại<br />và cho mình cơ hội được chia sẻ cùng bạn.
-        </p>
-        <div class="affirmation">
-          "Bạn không cần phải ổn ngay lập tức.<br />
-          Nhưng hãy nhớ rằng — bạn
-          <em style="color: var(--peach); font-style: normal; font-weight: 600"
-            >không hề một mình</em
-          >
-          đâu."
-        </div>
-        <div class="divider"></div>
-        <p
-          style="font-size: 0.84rem; color: var(--text-soft); line-height: 1.7"
+        <div
+          class="final-glow"
+          style="font-size: 3.5rem; margin-bottom: 0.8rem"
         >
-          Khi nào cần, cứ quay lại đây nha.<br />Lúc nào cũng có người sẵn lòng
-          lắng nghe. 🌸
+          🌻
+        </div>
+        <h1 class="hero" style="font-size: 1.6rem; margin-bottom: 0.4rem">
+          Bạn đã đọc hết rồi đó.
+        </h1>
+        <p
+          class="sub"
+          style="font-size: 0.88rem; line-height: 1.6; margin-top: 0.2rem"
+        >
+          Cảm ơn bạn đã lắng nghe<br />và cho mình cơ hội được chia sẻ cùng bạn.
         </p>
+
+        <div class="divider"></div>
+
         <div
           style="
-            margin-top: 1rem;
-            padding: 1rem 1.2rem;
+            font-family: &quot;Lora&quot;, serif;
+            font-style: italic;
+            font-size: 1.02rem;
+            line-height: 1.8;
+            color: var(--text);
+            padding: 1.1rem;
+            border-radius: 20px;
             background: linear-gradient(
               135deg,
               var(--peach-soft),
               var(--lavender-soft)
             );
-            border: 1px solid rgba(210, 170, 140, 0.15);
+            margin: 1rem 0;
+            border: 1px solid rgba(210, 170, 140, 0.12);
+          "
+        >
+          "Bạn không cần phải ổn ngay lập tức.<br />
+          Nhưng hãy nhớ rằng — bạn không hề một mình đâu."
+        </div>
+
+        <p
+          style="
+            font-size: 0.86rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            margin: 1rem 0;
+          "
+        >
+          Khi nào cần, bạn cứ quay lại đây nha.<br />
+          Lúc nào cũng có người sẵn lòng lắng nghe bạn. 🌸
+        </p>
+
+        <div
+          style="
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--card-border);
             border-radius: 18px;
             font-size: 0.86rem;
             line-height: 1.7;
-            color: var(--text);
+            color: var(--text-soft);
           "
         >
           💬
-          <em style="color: var(--peach); font-style: normal; font-weight: 700"
-            >Một lời nhắn —</em
+          <strong style="color: var(--peach)">Một lời nhắn gửi đến bạn —</strong
           ><br />
-          Dù bạn đang vui hay buồn, muốn nói hay chỉ muốn im lặng — mình luôn ở
-          đây. Cứ thoải mái nhắn bất cứ lúc nào nhé.
+          Dù bạn đang vui hay buồn, muốn nói ra hay chỉ muốn im lặng, mình luôn
+          ở đây. Hãy cứ thoải mái nhắn cho mình bất cứ lúc nào nhé.
         </div>
-        <button class="btn btn-main" onclick="go('s1')">
-          Đọc lại từ đầu 🔁
-        </button>
       </div>
     </div>
 
@@ -1173,6 +1177,7 @@
         },
       ];
       let qi = 0;
+      let qAnimating = false;
 
       function renderQ() {
         document.getElementById("qt").textContent = quotes[qi].t;
@@ -1183,22 +1188,48 @@
           .join("");
       }
 
-      function nq() {
-        qi = (qi + 1) % quotes.length;
-        fade(renderQ);
-      }
-      function pq() {
-        qi = (qi - 1 + quotes.length) % quotes.length;
-        fade(renderQ);
+      function slideQuote(direction) {
+        if (qAnimating) return;
+        qAnimating = true;
+        const el = document.getElementById("qContent");
+
+        // Slide out to left/right
+        el.classList.add(
+          direction === "left" ? "slide-out-left" : "slide-out-right",
+        );
+
+        setTimeout(() => {
+          // Update contents while invisible
+          if (direction === "left") {
+            qi = (qi + 1) % quotes.length;
+          } else {
+            qi = (qi - 1 + quotes.length) % quotes.length;
+          }
+          renderQ();
+
+          // Switch to incoming position (far right/left) instantly
+          el.classList.remove("slide-out-left", "slide-out-right");
+          el.classList.add(
+            direction === "left" ? "slide-in-left" : "slide-in-right",
+          );
+
+          // Trigger reflow to apply the transition-less state
+          el.offsetHeight;
+
+          // Animate back to center
+          el.classList.remove("slide-in-left", "slide-in-right");
+
+          setTimeout(() => {
+            qAnimating = false;
+          }, 450);
+        }, 350);
       }
 
-      function fade(fn) {
-        const el = document.getElementById("qt");
-        el.style.opacity = 0;
-        setTimeout(() => {
-          fn();
-          el.style.opacity = 1;
-        }, 250);
+      function nq() {
+        slideQuote("left");
+      }
+      function pq() {
+        slideQuote("right");
       }
 
       // Touch swipe for quotes
